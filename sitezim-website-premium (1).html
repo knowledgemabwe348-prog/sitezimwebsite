@@ -1,0 +1,1564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SiteZim | Professional Web Design Zimbabwe</title>
+  <meta name="description" content="SiteZim builds professional websites, handles domain registration, web hosting, SEO and business email for companies across Zimbabwe. Based in Masvingo.">
+  <meta name="keywords" content="web design Zimbabwe, website design Masvingo, affordable websites Zimbabwe, SEO Zimbabwe, domain registration Zimbabwe">
+  <meta property="og:title" content="SiteZim | Professional Web Design Zimbabwe">
+  <meta property="og:description" content="We build websites that grow businesses across Zimbabwe. Professional design, hosting, domains, SEO and email.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://sitezim.co.zw">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet">
+
+  <style>
+  /* ════════════════════════════
+     VARIABLES & RESET
+  ════════════════════════════ */
+  :root {
+    --primary:   #1E40C7;   /* Royal Blue */
+    --primary-dark: #142B85;
+    --midnight:  #060C1F;   /* Midnight Blue */
+    --gold:      #E8B95C;   /* Warm Gold */
+    --gold-dark: #C89638;
+    --dark:      #0A0F1F;
+    --dark2:     #151D33;
+    --charcoal:  #1C1F26;
+    --bg:        #F8FAFC;
+    --bg-soft:   #F1F3F8;   /* very light gray */
+    --white:     #FFFFFF;
+    --text:      #475569;
+    --text-light:#94A3B8;
+    --border:    #E2E8F0;
+    --font:      'Inter', 'Poppins', sans-serif;
+    --heading:   'Poppins', 'Inter', sans-serif;
+    --radius:    16px;
+    --radius-sm: 8px;
+    --shadow:    0 4px 24px rgba(30,64,199,0.08);
+    --shadow-lg: 0 20px 60px rgba(30,64,199,0.15);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font); background: var(--bg); color: var(--text); overflow-x: hidden; }
+  h1,h2,h3,h4,h5,h6 { font-family: var(--heading); color: var(--dark); font-weight: 700; }
+  a { color: var(--primary); text-decoration: none; transition: all .3s; }
+  img { max-width: 100%; }
+  section { padding: 100px 0; }
+
+  /* ════════════════════════════
+     PREMIUM CURSOR GLOW
+  ════════════════════════════ */
+  .cursor-glow {
+    position: fixed; top: 0; left: 0; width: 28px; height: 28px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,185,92,.85) 0%, rgba(232,185,92,0) 72%);
+    pointer-events: none; z-index: 99998; mix-blend-mode: screen;
+    transform: translate(-50%,-50%); opacity: 0;
+    transition: opacity .35s ease, width .25s ease, height .25s ease;
+  }
+  .cursor-glow.active { opacity: 1; }
+  .cursor-glow.hovering { width: 56px; height: 56px; background: radial-gradient(circle, rgba(232,185,92,.65) 0%, rgba(30,64,199,.25) 55%, rgba(232,185,92,0) 75%); }
+  @media (hover: none), (max-width: 991px) { .cursor-glow { display: none; } }
+
+  /* ════════════════════════════
+     PRELOADER
+  ════════════════════════════ */
+  #preloader {
+    position: fixed; inset: 0; z-index: 99999;
+    background: var(--dark);
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity .5s ease;
+  }
+  #preloader .loader-inner {
+    text-align: center;
+  }
+  #preloader .logo-anim {
+    font-family: var(--heading); font-size: 2.5rem; font-weight: 900;
+    color: white; letter-spacing: .05em;
+    animation: pulse-logo 1s ease-in-out infinite alternate;
+  }
+  #preloader .logo-anim span { color: var(--gold); }
+  #preloader .loader-bar {
+    width: 160px; height: 3px; background: rgba(255,255,255,.1);
+    border-radius: 3px; margin: 14px auto 0; overflow: hidden;
+  }
+  #preloader .loader-bar::after {
+    content: ''; display: block; width: 60%; height: 100%;
+    background: var(--gold); border-radius: 3px;
+    animation: loader-slide 1.2s ease-in-out infinite;
+  }
+  @keyframes pulse-logo { from{opacity:.7;transform:scale(.97);} to{opacity:1;transform:scale(1);} }
+  @keyframes loader-slide { 0%{transform:translateX(-100%);} 100%{transform:translateX(250%);} }
+
+  /* ════════════════════════════
+     NAVBAR
+  ════════════════════════════ */
+  #navbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    padding: 18px 0;
+    background: transparent;
+    transition: all .4s ease;
+  }
+  #navbar.scrolled {
+    padding: 12px 0;
+  }
+  #navbar.scrolled .navbar-inner {
+    background: rgba(10,15,31,.55);
+    backdrop-filter: blur(28px) saturate(160%);
+    -webkit-backdrop-filter: blur(28px) saturate(160%);
+    border: 1px solid rgba(255,255,255,.14);
+    border-radius: 60px;
+    padding: 8px 22px;
+    box-shadow: 0 8px 40px rgba(0,0,0,.35), 0 0 0 1px rgba(232,185,92,.06), 0 0 30px rgba(232,185,92,.08);
+  }
+  .navbar-inner { transition: all .4s ease; border-radius: 60px; border: 1px solid transparent; }
+  .nav-logo { font-family: var(--heading); font-size: 1.6rem; font-weight: 900; color: #fff; }
+  .nav-logo span { color: var(--gold); }
+  .nav-logo small { display: block; font-size: .55rem; font-weight: 400; letter-spacing: .22em; text-transform: uppercase; color: rgba(255,255,255,.45); margin-top: -3px; }
+  .nav-links { display: flex; align-items: center; gap: 8px; list-style: none; }
+  .nav-links a { color: rgba(255,255,255,.8); font-size: .82rem; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; padding: 6px 12px; border-radius: 6px; transition: all .25s; }
+  .nav-links a:hover { color: var(--gold); background: rgba(255,255,255,.06); }
+  .btn-nav { background: var(--gold); color: var(--dark) !important; font-weight: 700 !important; padding: 9px 22px !important; border-radius: 50px !important; }
+  .btn-nav:hover { background: var(--gold-dark) !important; transform: translateY(-1px); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+  .hamburger span { display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px; transition: all .3s; }
+  .mobile-nav {
+    display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(15,23,42,.98); backdrop-filter: blur(20px);
+    z-index: 999; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+  }
+  .mobile-nav.open { display: flex; }
+  .mobile-nav a { color: #fff; font-size: 1.2rem; font-weight: 600; padding: 12px 30px; border-radius: 8px; }
+  .mobile-nav a:hover { color: var(--gold); }
+  .mobile-nav-close { position: absolute; top: 20px; right: 20px; color: #fff; font-size: 1.8rem; cursor: pointer; }
+
+  /* ════════════════════════════
+     HERO
+  ════════════════════════════ */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--midnight) 0%, #0E1E4D 45%, var(--primary) 100%);
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+    padding: 140px 0 80px;
+  }
+  /* animated bg blobs */
+  .hero-blob {
+    position: absolute; border-radius: 50%; filter: blur(80px);
+    pointer-events: none; opacity: .18;
+    animation: blob-float 8s ease-in-out infinite;
+  }
+  .blob1 { width: 600px; height: 600px; background: var(--primary); top: -200px; right: -100px; }
+  .blob2 { width: 400px; height: 400px; background: var(--gold); bottom: -100px; left: -100px; animation-delay: -4s; }
+  .blob3 { width: 300px; height: 300px; background: #7C3AED; top: 40%; left: 30%; animation-delay: -2s; }
+  @keyframes blob-float { 0%,100%{transform:translateY(0) scale(1);} 50%{transform:translateY(-30px) scale(1.05);} }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(245,180,0,.15); border: 1px solid rgba(245,180,0,.3);
+    color: var(--gold); padding: 7px 18px; border-radius: 50px;
+    font-size: .72rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .hero-badge::before { content:''; width:7px; height:7px; background:var(--gold); border-radius:50%; animation:blink 2s ease-in-out infinite; }
+  @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:.3;} }
+
+  .hero h1 {
+    font-family: var(--heading); font-size: clamp(2.7rem, 7vw, 5rem);
+    font-weight: 900; line-height: 1.04; color: #fff; letter-spacing: -.02em;
+  }
+  .hero h1 span { color: var(--gold); display: block; }
+  .hero-sub { font-size: 1.05rem; color: rgba(255,255,255,.7); line-height: 1.8; margin-top: 20px; max-width: 520px; }
+
+  .hero-btns { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 36px; }
+  .btn-primary-hero {
+    background: var(--gold); color: var(--dark);
+    padding: 14px 32px; border-radius: 50px; font-weight: 800;
+    font-size: .88rem; letter-spacing: .06em; text-transform: uppercase;
+    border: none; cursor: pointer; transition: all .3s;
+    box-shadow: 0 8px 30px rgba(245,180,0,.35);
+  }
+  .btn-primary-hero:hover { background: var(--gold-dark); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(245,180,0,.45); color: var(--dark); }
+  .btn-outline-hero {
+    background: rgba(255,255,255,.1); color: #fff;
+    border: 2px solid rgba(255,255,255,.3);
+    padding: 12px 30px; border-radius: 50px; font-weight: 700;
+    font-size: .88rem; letter-spacing: .06em; text-transform: uppercase;
+    cursor: pointer; transition: all .3s; backdrop-filter: blur(6px);
+  }
+  .btn-outline-hero:hover { border-color: var(--gold); color: var(--gold); background: rgba(245,180,0,.08); transform: translateY(-3px); }
+
+  /* hero laptop mockup */
+  .hero-mockup {
+    position: relative; display: flex; align-items: center; justify-content: center;
+  }
+  .laptop-frame {
+    max-width: 560px; width: 100%; position: relative;
+    border-radius: 18px; overflow: hidden;
+    box-shadow: 0 40px 100px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.1);
+    animation: float-laptop 4s ease-in-out infinite;
+  }
+  @keyframes float-laptop { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-14px);} }
+  .laptop-photo { display: block; width: 100%; height: auto; border-radius: 18px; filter: brightness(.94) contrast(1.06) saturate(1.05); }
+  .laptop-screen-overlay {
+    position: absolute; bottom: 18px; left: 18px;
+    background: rgba(10,15,31,.72); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,.15); border-radius: 50px;
+    padding: 7px 16px 7px 10px; display: flex; align-items: center; gap: 8px;
+  }
+  .lso-nav { display: flex; align-items: center; gap: 8px; }
+  .lso-dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+  .lso-dot:nth-child(1){background:#FF5F57;} .lso-dot:nth-child(2){background:#FFBD2E;} .lso-dot:nth-child(3){background:#28C840;}
+  .lso-url { margin-left: 4px; font-size: .68rem; font-weight: 600; color: rgba(255,255,255,.85); letter-spacing: .03em; }
+
+  /* floating cards on hero */
+  .hero-float-card {
+    position: absolute; background: rgba(255,255,255,.12);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,.2); border-radius: var(--radius);
+    padding: 12px 16px; box-shadow: 0 8px 32px rgba(0,0,0,.2);
+  }
+  .hfc1 { top: 8%; right: 2%; animation: float-card 5s ease-in-out infinite; }
+  .hfc2 { bottom: 15%; right: 5%; animation: float-card 6s ease-in-out infinite; animation-delay: -2s; }
+  .hfc3 { bottom: 30%; left: 0%; animation: float-card 7s ease-in-out infinite; animation-delay: -1s; }
+  @keyframes float-card { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
+  .hfc-num { font-size: 1.4rem; font-weight: 900; color: var(--gold); font-family: var(--heading); line-height: 1; }
+  .hfc-label { font-size: .68rem; color: rgba(255,255,255,.7); font-weight: 500; letter-spacing: .06em; margin-top: 2px; }
+  .hfc-icon { font-size: 1.3rem; margin-bottom: 4px; }
+
+  /* trust pills */
+  .trust-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 36px; }
+  .trust-pill { display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); color: rgba(255,255,255,.75); padding: 5px 12px; border-radius: 20px; font-size: .72rem; font-weight: 500; }
+  .trust-pill i { color: var(--gold); }
+
+  /* ════════════════════════════
+     SOCIAL PROOF STRIP
+  ════════════════════════════ */
+  .social-proof-strip { background: var(--midnight); padding: 20px 0; border-top: 1px solid rgba(255,255,255,.06); border-bottom: 1px solid rgba(255,255,255,.06); }
+  .sps-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px 42px; }
+  .sps-item { display: flex; align-items: center; gap: 10px; color: rgba(255,255,255,.75); font-size: .85rem; font-weight: 600; letter-spacing: .03em; }
+  .sps-stars { color: var(--gold); letter-spacing: 2px; font-size: .9rem; }
+  .sps-divider { width: 1px; height: 18px; background: rgba(255,255,255,.15); }
+  .sps-num { color: var(--gold); font-weight: 800; }
+
+  /* ════════════════════════════
+     TRUST BANNER
+  ════════════════════════════ */
+  .trust-banner { background: var(--dark); padding: 28px 0; border-top: 1px solid rgba(255,255,255,.05); }
+  .trust-banner .badges { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 32px; }
+  .trust-badge { display: flex; align-items: center; gap: 8px; color: rgba(255,255,255,.6); font-size: .82rem; font-weight: 600; letter-spacing: .06em; }
+  .trust-badge i { color: var(--gold); font-size: 1.1rem; }
+
+  /* ════════════════════════════
+     STATS
+  ════════════════════════════ */
+  .stats-section { background: var(--white); padding: 80px 0; }
+  .stat-card {
+    text-align: center; padding: 40px 20px;
+    background: var(--white);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    transition: all .3s;
+  }
+  .stat-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: var(--primary); }
+  .stat-num { font-family: var(--heading); font-size: 3rem; font-weight: 900; color: var(--primary); line-height: 1; }
+  .stat-label { font-size: .8rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--text-light); margin-top: 6px; }
+
+  /* ════════════════════════════
+     ABOUT
+  ════════════════════════════ */
+  .about-section { background: var(--bg-soft); }
+  .about-img-wrap { position: relative; }
+  .about-img-wrap img { border-radius: var(--radius); box-shadow: var(--shadow-lg); }
+  .about-badge-card {
+    position: absolute; bottom: -20px; right: -20px;
+    background: var(--primary); color: #fff;
+    border-radius: var(--radius); padding: 20px 24px; text-align: center;
+    box-shadow: 0 12px 40px rgba(0,87,255,.3);
+  }
+  .about-badge-card .big { font-size: 2rem; font-weight: 900; font-family: var(--heading); }
+  .about-badge-card .sm { font-size: .72rem; font-weight: 600; letter-spacing: .08em; opacity: .85; }
+  .about-eyebrow { font-size: .72rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--primary); margin-bottom: 12px; }
+  .about-title { font-size: clamp(2.1rem, 4.6vw, 3.3rem); font-weight: 900; line-height: 1.1; color: var(--dark); }
+  .about-title span { color: var(--primary); }
+  .about-body { font-size: .97rem; line-height: 1.9; color: var(--text); margin-top: 16px; }
+  .mission-box { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); border-radius: var(--radius); padding: 24px; color: #fff; margin-top: 28px; }
+  .mission-box h5 { font-size: 1rem; font-weight: 700; color: var(--gold); margin-bottom: 6px; }
+  .mission-box p { font-size: .88rem; opacity: .9; line-height: 1.7; }
+  .what-we-do { margin-top: 24px; }
+  .wwd-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: .88rem; color: var(--dark); font-weight: 500; }
+  .wwd-item i { color: var(--primary); font-size: 1rem; flex-shrink: 0; }
+
+  /* ════════════════════════════
+     SERVICES
+  ════════════════════════════ */
+  .services-section { background: var(--white); }
+  .section-eyebrow { font-size: .72rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--primary); margin-bottom: 10px; }
+  .section-heading { font-size: clamp(2.1rem, 4.6vw, 3.3rem); font-weight: 900; color: var(--dark); line-height: 1.1; }
+  .section-heading span { color: var(--primary); }
+  .section-sub { color: var(--text); font-size: .97rem; line-height: 1.7; margin-top: 12px; max-width: 580px; }
+
+  .svc-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 36px 28px;
+    transition: all .35s cubic-bezier(.4,0,.2,1);
+    height: 100%; cursor: pointer; position: relative; overflow: hidden;
+  }
+  .svc-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--gold));
+    transform: scaleX(0); transition: transform .35s ease;
+    transform-origin: left;
+  }
+  .svc-card:hover { transform: translateY(-8px); box-shadow: 0 24px 60px rgba(30,64,199,.16), 0 0 44px rgba(232,185,92,.1); border-color: rgba(30,64,199,.25); }
+  .svc-card:hover::before { transform: scaleX(1); }
+  .svc-icon-wrap { width: 64px; height: 64px; border-radius: 16px; background: rgba(0,87,255,.08); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; transition: all .3s; }
+  .svc-card:hover .svc-icon-wrap { background: var(--primary); }
+  .svc-icon-wrap i { font-size: 1.6rem; color: var(--primary); transition: all .3s; }
+  .svc-card:hover .svc-icon-wrap i { color: #fff; }
+  .svc-card h3 { font-size: 1.1rem; font-weight: 700; color: var(--dark); margin-bottom: 10px; }
+  .svc-card p { font-size: .85rem; color: var(--text); line-height: 1.7; }
+  .svc-price { font-size: .88rem; font-weight: 800; color: var(--primary); margin-top: 14px; }
+  .svc-link { display: inline-flex; align-items: center; gap: 5px; font-size: .8rem; font-weight: 700; color: var(--primary); margin-top: 14px; opacity: 0; transform: translateX(-6px); transition: all .3s; }
+  .svc-card:hover .svc-link { opacity: 1; transform: translateX(0); }
+
+  /* ════════════════════════════
+     PROCESS
+  ════════════════════════════ */
+  .process-section { background: var(--dark); position: relative; overflow: hidden; }
+  .process-section::before { content:''; position:absolute; width:500px; height:500px; border-radius:50%; background:radial-gradient(circle, rgba(232,185,92,.1), transparent 70%); top:-200px; right:-150px; filter:blur(60px); animation: blob-float 9s ease-in-out infinite; pointer-events:none; }
+  .process-section .section-heading { color: #fff; }
+  .process-section .section-sub { color: rgba(255,255,255,.6); }
+  .process-step { text-align: center; position: relative; padding: 0 16px; }
+  .step-num {
+    width: 60px; height: 60px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--gold));
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--heading); font-size: 1.3rem; font-weight: 900; color: #fff;
+    margin: 0 auto 18px; box-shadow: 0 8px 24px rgba(0,87,255,.35);
+  }
+  .process-step h4 { font-size: .95rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .process-step p { font-size: .8rem; color: rgba(255,255,255,.55); line-height: 1.6; }
+  .step-arrow { display: flex; align-items: flex-start; justify-content: center; padding-top: 20px; }
+  .step-arrow i { font-size: 1.2rem; color: rgba(245,180,0,.4); }
+
+  /* ════════════════════════════
+     PORTFOLIO
+  ════════════════════════════ */
+  .portfolio-section { background: var(--bg-soft); }
+  .port-card {
+    background: var(--white); border-radius: var(--radius);
+    overflow: hidden; border: 1px solid var(--border);
+    box-shadow: var(--shadow); transition: all .35s;
+  }
+  .port-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+  .port-mockup {
+    height: 220px; position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .pm-green  { background: linear-gradient(135deg,#0d2a1c,#1d6b45); }
+  .pm-blue   { background: linear-gradient(135deg,var(--midnight),var(--primary)); }
+  .pm-purple { background: linear-gradient(135deg,#170c30,#5B21A8); }
+  .pm-red    { background: linear-gradient(135deg,#210a0a,#7F1D1D); }
+  .pm-teal   { background: linear-gradient(135deg,#0a2323,#0E7490); }
+  .pm-amber  { background: linear-gradient(135deg,#231705,#9A6B0C); }
+  /* premium browser-window preview */
+  .port-browser-bar { position: absolute; top: 0; left: 0; right: 0; z-index: 3; background: rgba(0,0,0,.28); padding: 9px 12px; display: flex; align-items: center; gap: 6px; }
+  .pb-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+  .pb-dot:nth-child(1){background:#FF5F57;} .pb-dot:nth-child(2){background:#FFBD2E;} .pb-dot:nth-child(3){background:#28C840;}
+  .pb-url { margin-left: 8px; background: rgba(255,255,255,.12); border-radius: 20px; padding: 3px 14px; font-size: .62rem; color: rgba(255,255,255,.65); flex: 1; max-width: 160px; }
+  .port-preview { position: absolute; inset: 0; padding-top: 34px; transition: transform .6s cubic-bezier(.16,1,.3,1); }
+  .port-card:hover .port-preview { transform: scale(1.07); }
+  .pp-hero { padding: 20px 18px 0; }
+  .pp-line1 { background: rgba(255,255,255,.92); height: 11px; width: 62%; border-radius: 4px; margin-bottom: 9px; }
+  .pp-line2 { background: rgba(255,255,255,.5); height: 6px; width: 42%; border-radius: 4px; margin-bottom: 16px; }
+  .pp-btn { background: var(--gold); height: 9px; width: 72px; border-radius: 20px; }
+  .pp-grid { display: flex; gap: 8px; padding: 0 18px; margin-top: 16px; }
+  .pp-block { flex: 1; background: rgba(255,255,255,.14); border-radius: 6px; height: 46px; }
+  .port-overlay {
+    position: absolute; inset: 0; z-index: 2;
+    background: linear-gradient(180deg, rgba(6,12,31,0) 35%, rgba(6,12,31,.92) 100%);
+    display: flex; align-items: flex-end; justify-content: center; padding-bottom: 20px;
+    opacity: 0; transition: opacity .35s ease;
+  }
+  .port-card:hover .port-overlay { opacity: 1; }
+  .port-visit-btn {
+    background: var(--gold); color: var(--dark); font-size: .72rem; font-weight: 800;
+    letter-spacing: .06em; text-transform: uppercase; padding: 10px 22px; border-radius: 50px;
+    display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 10px 28px rgba(0,0,0,.35);
+    transform: translateY(8px); transition: transform .35s ease, background .25s ease;
+  }
+  .port-card:hover .port-visit-btn { transform: translateY(0); }
+  .port-visit-btn:hover { background: var(--gold-dark); color: var(--dark); }
+  .port-info { padding: 22px; }
+  .port-industry { font-size: .68rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--primary); margin-bottom: 6px; }
+  .port-card h4 { font-size: 1.05rem; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+  .port-card p { font-size: .83rem; color: var(--text); line-height: 1.6; }
+  .port-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .port-tag { font-size: .68rem; background: rgba(0,87,255,.08); color: var(--primary); padding: 3px 10px; border-radius: 20px; font-weight: 600; }
+  .port-badge-live { display: inline-flex; align-items: center; gap: 5px; font-size: .68rem; font-weight: 700; color: #059652; margin-top: 10px; }
+  .port-badge-live::before { content:''; width:6px; height:6px; background:#059652; border-radius:50%; }
+  .port-badge-soon { font-size: .68rem; font-weight: 700; color: var(--gold); margin-top: 10px; display: block; }
+
+  /* ════════════════════════════
+     PRICING
+  ════════════════════════════ */
+  .pricing-section { background: var(--dark); position: relative; overflow: hidden; }
+  .pricing-section::before { content:''; position:absolute; inset:0; background:radial-gradient(circle at 30% 50%, rgba(0,87,255,.15) 0%, transparent 60%); pointer-events:none; }
+  .pricing-section .section-heading { color: #fff; }
+  .pricing-section .section-sub { color: rgba(255,255,255,.6); }
+  .price-card {
+    background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
+    border-radius: var(--radius); padding: 40px 32px;
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    height: 100%; transition: all .35s; position: relative;
+  }
+  .price-card:hover { transform: translateY(-6px); border-color: rgba(255,255,255,.25); }
+  .price-card.featured {
+    background: linear-gradient(135deg, rgba(0,87,255,.3), rgba(0,64,204,.2));
+    border: 2px solid var(--gold);
+  }
+  .price-badge { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--gold); color: var(--dark); font-size: .68rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; padding: 4px 18px; border-radius: 20px; white-space: nowrap; }
+  .price-tier { font-size: .72rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.55); margin-bottom: 8px; }
+  .price-amount { font-family: var(--heading); font-size: 3.2rem; font-weight: 900; color: var(--gold); line-height: 1; }
+  .price-amount sup { font-size: 1.4rem; vertical-align: super; }
+  .price-desc { font-size: .83rem; color: rgba(255,255,255,.55); margin: 8px 0 20px; line-height: 1.6; }
+  .price-divider { height: 1px; background: rgba(255,255,255,.08); margin: 20px 0; }
+  .price-feat { display: flex; align-items: center; gap: 10px; padding: 7px 0; font-size: .85rem; color: rgba(255,255,255,.75); }
+  .price-feat i.check { color: var(--gold); font-size: .9rem; flex-shrink: 0; }
+  .price-feat i.cross { color: rgba(255,255,255,.2); font-size: .9rem; flex-shrink: 0; }
+  .price-feat.na { color: rgba(255,255,255,.3); }
+  .price-cta {
+    display: block; width: 100%; margin-top: 24px; padding: 13px;
+    border-radius: 50px; text-align: center; font-weight: 800; font-size: .85rem;
+    letter-spacing: .06em; text-transform: uppercase; transition: all .3s; cursor: pointer;
+    background: transparent; border: 2px solid rgba(255,255,255,.25); color: #fff;
+  }
+  .price-cta:hover { border-color: var(--gold); color: var(--gold); }
+  .price-card.featured .price-cta { background: var(--gold); border-color: var(--gold); color: var(--dark); }
+  .price-card.featured .price-cta:hover { background: var(--gold-dark); }
+
+  /* ════════════════════════════
+     TESTIMONIALS
+  ════════════════════════════ */
+  .testi-section { background: var(--white); }
+  .testi-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 32px;
+    box-shadow: var(--shadow); transition: all .3s; height: 100%;
+  }
+  .testi-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .testi-stars { color: var(--gold); font-size: .85rem; margin-bottom: 16px; }
+  .testi-text { font-size: .9rem; color: var(--text); line-height: 1.8; font-style: italic; }
+  .testi-author { display: flex; align-items: center; gap: 14px; margin-top: 22px; }
+  .testi-avatar { width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--heading); font-size: 1.1rem; font-weight: 800; color: #fff; flex-shrink: 0; }
+  .av-green  { background: linear-gradient(135deg,#1a3c2e,#2d6a4f); }
+  .av-blue   { background: linear-gradient(135deg,var(--midnight),var(--primary)); }
+  .av-purple { background: linear-gradient(135deg,#1a1235,#6B21A8); }
+  .testi-name { font-size: .88rem; font-weight: 700; color: var(--dark); }
+  .testi-role { font-size: .75rem; color: var(--text-light); }
+
+  /* ════════════════════════════
+     CONTACT
+  ════════════════════════════ */
+  .contact-section { background: var(--bg-soft); }
+  .contact-info-card {
+    background: var(--dark); border-radius: var(--radius); padding: 40px;
+    height: 100%;
+  }
+  .cic-title { font-size: 1.4rem; font-weight: 800; color: #fff; margin-bottom: 8px; }
+  .cic-sub { font-size: .88rem; color: rgba(255,255,255,.55); line-height: 1.7; margin-bottom: 32px; }
+  .ci-item { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 24px; }
+  .ci-icon { width: 46px; height: 46px; background: rgba(245,180,0,.15); border: 1px solid rgba(245,180,0,.3); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .ci-icon i { font-size: 1.1rem; color: var(--gold); }
+  .ci-label { font-size: .68rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.4); margin-bottom: 3px; }
+  .ci-value { font-size: .9rem; color: rgba(255,255,255,.85); font-weight: 600; }
+  .ci-value a { color: rgba(255,255,255,.85); }
+  .ci-value a:hover { color: var(--gold); }
+  .cic-social { display: flex; gap: 10px; margin-top: 32px; }
+  .cic-social a { width: 40px; height: 40px; border-radius: 10px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.6); font-size: .95rem; transition: all .3s; }
+  .cic-social a:hover { background: var(--gold); border-color: var(--gold); color: var(--dark); transform: translateY(-2px); }
+
+  .contact-form-card { background: var(--white); border-radius: var(--radius); padding: 40px; box-shadow: var(--shadow); }
+  .form-label-custom { font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--primary); margin-bottom: 6px; display: block; }
+  .form-control-custom {
+    width: 100%; padding: 12px 16px; border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm); font-size: .88rem; font-family: var(--font);
+    color: var(--dark); background: var(--bg); transition: border-color .25s;
+    outline: none;
+  }
+  .form-control-custom:focus { border-color: var(--primary); background: var(--white); }
+  .form-control-custom::placeholder { color: var(--text-light); }
+  textarea.form-control-custom { min-height: 130px; resize: vertical; }
+  .btn-submit {
+    width: 100%; padding: 14px; background: var(--primary); color: #fff;
+    border: none; border-radius: 50px; font-size: .88rem; font-weight: 800;
+    letter-spacing: .08em; text-transform: uppercase; cursor: pointer;
+    transition: all .3s; font-family: var(--font);
+    box-shadow: 0 8px 24px rgba(0,87,255,.3);
+  }
+  .btn-submit:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,87,255,.4); }
+
+  /* ════════════════════════════
+     FOOTER CTA
+  ════════════════════════════ */
+  .footer-cta { background: var(--midnight); padding: 90px 0; position: relative; overflow: hidden; }
+  .footer-cta-blob { position: absolute; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(232,185,92,.14), transparent 70%); top: -250px; right: -150px; filter: blur(70px); animation: blob-float 10s ease-in-out infinite; pointer-events: none; }
+  .fc-eyebrow { font-size: .72rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+  .fc-heading { font-size: clamp(2rem, 4.2vw, 3rem); font-weight: 900; line-height: 1.12; color: #fff; }
+  .fc-heading span { color: var(--gold); }
+  .fc-btn {
+    display: inline-flex; align-items: center; gap: 8px; background: var(--gold); color: var(--dark);
+    padding: 16px 34px; border-radius: 50px; font-weight: 800; font-size: .9rem;
+    letter-spacing: .05em; text-transform: uppercase; box-shadow: 0 10px 34px rgba(232,185,92,.3);
+    transition: all .3s;
+  }
+  .fc-btn:hover { background: var(--gold-dark); color: var(--dark); transform: translateY(-3px); box-shadow: 0 14px 42px rgba(232,185,92,.4); }
+
+  /* ════════════════════════════
+     FOOTER
+  ════════════════════════════ */
+  footer { background: var(--dark); padding: 80px 0 0; }
+  .footer-logo { font-family: var(--heading); font-size: 1.8rem; font-weight: 900; color: #fff; }
+  .footer-logo span { color: var(--gold); }
+  .footer-logo small { display: block; font-size: .58rem; letter-spacing: .2em; color: rgba(255,255,255,.35); font-weight: 400; margin-top: -2px; }
+  .footer-desc { font-size: .85rem; color: rgba(255,255,255,.45); line-height: 1.8; margin-top: 14px; }
+  .footer-social { display: flex; gap: 10px; margin-top: 20px; }
+  .footer-social a { width: 38px; height: 38px; border-radius: 10px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.5); font-size: .9rem; transition: all .3s; }
+  .footer-social a:hover { background: var(--gold); border-color: var(--gold); color: var(--dark); }
+  .footer-heading { font-size: .72rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+  .footer-links { list-style: none; }
+  .footer-links li { margin-bottom: 10px; }
+  .footer-links a { color: rgba(255,255,255,.45); font-size: .85rem; transition: color .25s; }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-contact-card { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius); padding: 22px; }
+  .footer-contact-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 14px; }
+  .footer-contact-item i { color: var(--gold); font-size: .9rem; margin-top: 2px; flex-shrink: 0; }
+  .footer-contact-item span { font-size: .85rem; color: rgba(255,255,255,.45); line-height: 1.5; }
+  .footer-contact-item a { color: rgba(255,255,255,.45); }
+  .footer-contact-item a:hover { color: var(--gold); }
+  .footer-divider { border-top: 1px solid rgba(255,255,255,.06); margin-top: 60px; padding: 24px 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  .footer-copy { font-size: .78rem; color: rgba(255,255,255,.25); }
+  .footer-copy span { color: var(--gold); }
+
+  /* ════════════════════════════
+     WHATSAPP FLOAT
+  ════════════════════════════ */
+  .wa-float {
+    position: fixed; bottom: 28px; right: 24px; z-index: 9998;
+    width: 58px; height: 58px; background: #25D366; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 24px rgba(37,211,102,.4);
+    animation: wa-pulse 2.5s ease-in-out infinite;
+    transition: transform .3s;
+  }
+  .wa-float:hover { transform: scale(1.1); }
+  .wa-float i { font-size: 1.6rem; color: #fff; }
+  @keyframes wa-pulse { 0%,100%{box-shadow:0 6px 24px rgba(37,211,102,.4);} 50%{box-shadow:0 6px 40px rgba(37,211,102,.7);} }
+
+  /* ════════════════════════════
+     SCROLL TOP
+  ════════════════════════════ */
+  #scroll-top {
+    position: fixed; bottom: 96px; right: 24px; z-index: 9997;
+    width: 42px; height: 42px; background: var(--primary); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 1.1rem; opacity: 0; visibility: hidden;
+    transition: all .3s; box-shadow: 0 4px 16px rgba(0,87,255,.3);
+  }
+  #scroll-top.show { opacity: 1; visibility: visible; }
+  #scroll-top:hover { background: var(--primary-dark); transform: translateY(-2px); }
+
+  /* ════════════════════════════
+     UTILITIES
+  ════════════════════════════ */
+  .divider { width: 48px; height: 4px; background: linear-gradient(90deg, var(--primary), var(--gold)); border-radius: 4px; margin-top: 14px; }
+  .section-dark { background: var(--dark2); }
+
+  /* ════════════════════════════
+     RESPONSIVE
+  ════════════════════════════ */
+  @media (max-width: 991px) {
+    section { padding: 70px 0; }
+    .hero { padding: 130px 0 70px; }
+    .hero-mockup { margin-top: 50px; }
+    .hfc1,.hfc2,.hfc3 { display: none; }
+    .about-badge-card { bottom: -10px; right: 10px; }
+  }
+  @media (max-width: 768px) {
+    .nav-links, .btn-nav { display: none; }
+    .hamburger { display: flex; }
+    .hero h1 { font-size: 2rem; }
+    .laptop-frame { max-width: 320px; }
+    .step-arrow { display: none; }
+    .footer-divider { flex-direction: column; text-align: center; }
+    .about-badge-card { position: static; margin-top: 20px; display: inline-block; }
+  }
+  </style>
+</head>
+<body>
+
+<!-- PRELOADER -->
+<div id="preloader">
+  <div class="loader-inner">
+    <div class="logo-anim">Site<span>Zim</span></div>
+    <div class="loader-bar"></div>
+  </div>
+</div>
+
+<!-- PREMIUM CURSOR GLOW -->
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/263788331451?text=Hello SiteZim! I want to get my business online." target="_blank" class="wa-float" title="Chat on WhatsApp">
+  <i class="bi bi-whatsapp"></i>
+</a>
+
+<!-- SCROLL TOP -->
+<a href="#" id="scroll-top"><i class="bi bi-arrow-up"></i></a>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="container">
+    <div class="d-flex align-items-center justify-content-between navbar-inner">
+      <a href="#hero" class="nav-logo">Site<span>Zim</span><small>sitezim.co.zw</small></a>
+      <ul class="nav-links mb-0">
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#contact" class="btn-nav">Get Quote</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger" onclick="toggleMobileNav()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <span class="mobile-nav-close" onclick="toggleMobileNav()"><i class="bi bi-x-lg"></i></span>
+  <a href="#hero" onclick="toggleMobileNav()">Home</a>
+  <a href="#about" onclick="toggleMobileNav()">About</a>
+  <a href="#services" onclick="toggleMobileNav()">Services</a>
+  <a href="#portfolio" onclick="toggleMobileNav()">Portfolio</a>
+  <a href="#pricing" onclick="toggleMobileNav()">Pricing</a>
+  <a href="#contact" onclick="toggleMobileNav()">Contact</a>
+  <a href="https://wa.me/263788331451" target="_blank" style="color:var(--gold);font-weight:800;">📱 WhatsApp Us</a>
+</div>
+
+<main>
+<!-- ════════════════════════════
+     HERO
+════════════════════════════ -->
+<section class="hero" id="hero">
+  <div class="hero-blob blob1"></div>
+  <div class="hero-blob blob2"></div>
+  <div class="hero-blob blob3"></div>
+  <div class="container position-relative" style="z-index:2;">
+    <div class="row align-items-center">
+      <div class="col-lg-6" data-aos="fade-right" data-aos-delay="100">
+        <div class="hero-badge">Zimbabwe's #1 Web Design Studio</div>
+        <h1>Digital Experiences That Make<br/><span>Businesses Impossible to Ignore</span></h1>
+        <p class="hero-sub">Premium website design, hosting, domains, SEO and business email — built for Zimbabwean companies that want to look world-class online. Fast. Affordable. Unmistakably professional.</p>
+        <div class="hero-btns">
+          <a href="#contact" class="btn-primary-hero">🚀 Start Your Project</a>
+          <a href="#portfolio" class="btn-outline-hero">👀 View Portfolio</a>
+        </div>
+        <div class="trust-pills">
+          <div class="trust-pill"><i class="bi bi-shield-check"></i> SSL Secured</div>
+          <div class="trust-pill"><i class="bi bi-phone"></i> Mobile Friendly</div>
+          <div class="trust-pill"><i class="bi bi-graph-up"></i> SEO Ready</div>
+          <div class="trust-pill"><i class="bi bi-lightning-charge"></i> Fast Loading</div>
+          <div class="trust-pill"><i class="bi bi-envelope"></i> Professional Email</div>
+          <div class="trust-pill"><i class="bi bi-layout-text-window"></i> Responsive Design</div>
+        </div>
+      </div>
+      <div class="col-lg-6" data-aos="fade-left" data-aos-delay="300">
+        <div class="hero-mockup">
+          <!-- Floating stats cards -->
+          <div class="hero-float-card hfc1">
+            <div class="hfc-icon">⭐</div>
+            <div class="hfc-num">5.0</div>
+            <div class="hfc-label">Client Rating</div>
+          </div>
+          <div class="hero-float-card hfc2">
+            <div class="hfc-icon">🚀</div>
+            <div class="hfc-num">5–7</div>
+            <div class="hfc-label">Day Delivery</div>
+          </div>
+          <div class="hero-float-card hfc3">
+            <div class="hfc-icon">💰</div>
+            <div class="hfc-num">$150</div>
+            <div class="hfc-label">Starting Price</div>
+          </div>
+          <!-- Real Laptop Photo Mockup -->
+          <div class="laptop-frame">
+            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1000&q=80" alt="SiteZim website design displayed on laptop" class="laptop-photo">
+            <div class="laptop-screen-overlay">
+              <div class="lso-nav">
+                <span class="lso-dot"></span><span class="lso-dot"></span><span class="lso-dot"></span>
+                <span class="lso-url">sitezim.co.zw</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF STRIP -->
+<div class="social-proof-strip">
+  <div class="container">
+    <div class="sps-row">
+      <div class="sps-item"><span class="sps-stars">★★★★★</span> Rated 5.0</div>
+      <div class="sps-divider"></div>
+      <div class="sps-item">Trusted by Zimbabwean businesses</div>
+      <div class="sps-divider"></div>
+      <div class="sps-item"><span class="sps-num">12+</span> Projects Delivered</div>
+      <div class="sps-divider"></div>
+      <div class="sps-item"><span class="sps-num">5–7</span> Day Delivery</div>
+    </div>
+  </div>
+</div>
+
+<!-- TRUST BANNER -->
+<div class="trust-banner">
+  <div class="container">
+    <div class="badges">
+      <div class="trust-badge"><i class="bi bi-shield-check"></i> SSL Secured</div>
+      <div class="trust-badge"><i class="bi bi-phone"></i> Mobile Friendly</div>
+      <div class="trust-badge"><i class="bi bi-graph-up"></i> SEO Ready</div>
+      <div class="trust-badge"><i class="bi bi-lightning-charge"></i> Fast Loading</div>
+      <div class="trust-badge"><i class="bi bi-envelope"></i> Professional Email</div>
+      <div class="trust-badge"><i class="bi bi-layout-text-window"></i> Responsive Design</div>
+      <div class="trust-badge"><i class="bi bi-geo-alt"></i> Google Maps Ready</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════
+     STATS
+════════════════════════════ -->
+<section class="stats-section">
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="stat-card">
+          <div class="stat-num" data-count="12">12+</div>
+          <div class="stat-label">Projects Completed</div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="stat-card">
+          <div class="stat-num" data-count="10">10+</div>
+          <div class="stat-label">Happy Clients</div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+        <div class="stat-card">
+          <div class="stat-num">5–7</div>
+          <div class="stat-label">Days Avg Delivery</div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+        <div class="stat-card">
+          <div class="stat-num">24/7</div>
+          <div class="stat-label">WhatsApp Support</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════
+     ABOUT
+════════════════════════════ -->
+<section class="about-section" id="about">
+  <div class="container">
+    <div class="row gy-5 align-items-center">
+      <div class="col-lg-5" data-aos="fade-right" data-aos-delay="100">
+        <div class="about-img-wrap">
+          <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80" alt="SiteZim professional web design team at work" style="border-radius:var(--radius);">
+          <div class="about-badge-card">
+            <div class="big">ZW</div>
+            <div class="sm">Based in Masvingo</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-7" data-aos="fade-left" data-aos-delay="200">
+        <div class="about-eyebrow">About SiteZim</div>
+        <h2 class="about-title">Helping Zimbabwean Businesses Build a<br/><span>Powerful Online Presence</span></h2>
+        <div class="divider mb-4"></div>
+        <p class="about-body">SiteZim is a Zimbabwean digital solutions company dedicated to helping businesses establish a strong online presence. We specialize in designing modern, professional websites that help businesses attract customers, build credibility, and grow.</p>
+        <p class="about-body" style="margin-top:12px;">In today's digital world, every business deserves to be seen online. Whether you're a startup, a small business, or an established company, we create websites that are fast, responsive, and tailored to your brand.</p>
+        <p class="about-body" style="margin-top:12px;">Beyond web design, we help businesses take the next step with professional email, domain registration, web hosting, and digital solutions that make it easier for customers to find and trust them.</p>
+        <div class="mission-box">
+          <h5><i class="bi bi-bullseye me-2"></i>Our Mission</h5>
+          <p>To empower businesses with affordable, high-quality digital solutions that help them succeed in an increasingly connected world.</p>
+        </div>
+        <div class="what-we-do">
+          <div class="wwd-item"><i class="bi bi-check-circle-fill"></i> Professional website design</div>
+          <div class="wwd-item"><i class="bi bi-check-circle-fill"></i> Business websites and e-commerce stores</div>
+          <div class="wwd-item"><i class="bi bi-check-circle-fill"></i> Domain registration and web hosting</div>
+          <div class="wwd-item"><i class="bi bi-check-circle-fill"></i> Business email setup (info@yourbusiness.co.zw)</div>
+          <div class="wwd-item"><i class="bi bi-check-circle-fill"></i> Website maintenance and support</div>
+          <div class="wwd-item"><i class="bi bi-check-circle-fill"></i> SEO and Google Business Profile setup</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════
+     SERVICES
+════════════════════════════ -->
+<section class="services-section" id="services">
+  <div class="container">
+    <div class="row mb-5">
+      <div class="col-lg-6" data-aos="fade-right">
+        <div class="section-eyebrow">What We Offer</div>
+        <h2 class="section-heading">Services Built for<br/><span>Zimbabwean Businesses</span></h2>
+        <div class="divider"></div>
+      </div>
+      <div class="col-lg-6 d-flex align-items-end" data-aos="fade-left">
+        <p class="section-sub">Everything your business needs to get online and grow — design, hosting, email, SEO and more. All in one place.</p>
+      </div>
+    </div>
+    <div class="row gy-4">
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="svc-card">
+          <div class="svc-icon-wrap"><i class="bi bi-globe2"></i></div>
+          <h3>Business Websites</h3>
+          <p>Modern, professional websites for companies, shops, schools and more — mobile-friendly and built to convert visitors into customers.</p>
+          <div class="svc-price">from $150</div>
+          <div class="svc-link">Learn More <i class="bi bi-arrow-right"></i></div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="svc-card">
+          <div class="svc-icon-wrap"><i class="bi bi-cart-fill"></i></div>
+          <h3>E-commerce Stores</h3>
+          <p>Sell your products online with a fully functional store — product listings, cart, EcoCash/payment info and order details.</p>
+          <div class="svc-price">$100–$160 extra</div>
+          <div class="svc-link">Learn More <i class="bi bi-arrow-right"></i></div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+        <div class="svc-card">
+          <div class="svc-icon-wrap"><i class="bi bi-mortarboard-fill"></i></div>
+          <h3>School Websites</h3>
+          <p>Websites for schools and colleges with programmes, admissions, student portals, fee payment info and photo galleries.</p>
+          <div class="svc-price">from $200</div>
+          <div class="svc-link">Learn More <i class="bi bi-arrow-right"></i></div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+        <div class="svc-card">
+          <div class="svc-icon-wrap"><i class="bi bi-globe"></i></div>
+          <h3>Domain Registration</h3>
+          <p>Get your own .co.zw or .com domain name. We register it and connect it to your website so you're live online.</p>
+          <div class="svc-price">included in packages</div>
+          <div class="svc-link">Learn More <i class="bi bi-arrow-right"></i></div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
+        <div class="svc-card">
+          <div class="svc-icon-wrap"><i class="bi bi-server"></i></div>
+          <h3>Web Hosting</h3>
+          <p>Fast and reliable hosting for your website — we handle setup and keep your site online 24/7 so customers always reach you.</p>
+          <div class="svc-price">free via Netlify</div>
+          <div class="svc-link">Learn More <i class="bi bi-arrow-right"></i></div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
+        <div class="svc-card">
+          <div class="svc-icon-wrap"><i class="bi bi-envelope-fill"></i></div>
+          <h3>Professional Email</h3>
+          <p>Get info@yourbusiness.co.zw — looks professional, builds trust and separates your business from a Gmail address.</p>
+          <div class="svc-price">via Zoho Mail</div>
+          <div class="svc-link">Learn More <i class="bi bi-arrow-right"></i></div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="700">
+        <div class="svc-card">
+          <div class="svc-icon-wrap"><i class="bi bi-tools"></i></div>
+          <h3>Website Maintenance</h3>
+          <p>We keep your website fresh every month — content, photos, prices and products updated for you. No technical skills needed.</p>
+          <div class="svc-price">$20–$50 / month</div>
+          <div class="svc-link">Learn More <i class="bi bi-arrow-right"></i></div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="800">
+        <div class="svc-card">
+          <div class="svc-icon-wrap"><i class="bi bi-graph-up-arrow"></i></div>
+          <h3>SEO</h3>
+          <p>Help customers find you on Google. We optimise your site and set up your Google Business Profile so you rank in local searches.</p>
+          <div class="svc-price">included in Growth & Premium</div>
+          <div class="svc-link">Learn More <i class="bi bi-arrow-right"></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════
+     PROCESS
+════════════════════════════ -->
+<section class="process-section" id="process">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <div class="section-eyebrow" style="color:var(--gold);">How It Works</div>
+      <h2 class="section-heading" style="color:#fff;">From First Call to<br/><span style="color:var(--gold);">Live Website</span></h2>
+      <div class="divider mx-auto mt-3"></div>
+    </div>
+    <div class="row align-items-start gy-4">
+      <div class="col-lg-1 col-md-2 col-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="process-step">
+          <div class="step-num">1</div>
+          <h4>Consult</h4>
+          <p>We talk about your business and goals</p>
+        </div>
+      </div>
+      <div class="col-lg-1 col-md-1 col-auto d-flex align-items-start step-arrow pt-3"><i class="bi bi-chevron-right"></i></div>
+      <div class="col-lg-1 col-md-2 col-4" data-aos="fade-up" data-aos-delay="150">
+        <div class="process-step">
+          <div class="step-num">2</div>
+          <h4>Plan</h4>
+          <p>We agree on scope, price and timeline</p>
+        </div>
+      </div>
+      <div class="col-lg-1 col-md-1 col-auto d-flex align-items-start step-arrow pt-3"><i class="bi bi-chevron-right"></i></div>
+      <div class="col-lg-1 col-md-2 col-4" data-aos="fade-up" data-aos-delay="200">
+        <div class="process-step">
+          <div class="step-num">3</div>
+          <h4>Design</h4>
+          <p>We create your custom website design</p>
+        </div>
+      </div>
+      <div class="col-lg-1 col-md-1 col-auto d-flex align-items-start step-arrow pt-3"><i class="bi bi-chevron-right"></i></div>
+      <div class="col-lg-1 col-md-2 col-4" data-aos="fade-up" data-aos-delay="250">
+        <div class="process-step">
+          <div class="step-num">4</div>
+          <h4>Build</h4>
+          <p>Full development with all features</p>
+        </div>
+      </div>
+      <div class="col-lg-1 col-md-1 col-auto d-flex align-items-start step-arrow pt-3"><i class="bi bi-chevron-right"></i></div>
+      <div class="col-lg-1 col-md-2 col-4" data-aos="fade-up" data-aos-delay="300">
+        <div class="process-step">
+          <div class="step-num">5</div>
+          <h4>Test</h4>
+          <p>You review and we make revisions</p>
+        </div>
+      </div>
+      <div class="col-lg-1 col-md-1 col-auto d-flex align-items-start step-arrow pt-3"><i class="bi bi-chevron-right"></i></div>
+      <div class="col-lg-1 col-md-2 col-4" data-aos="fade-up" data-aos-delay="350">
+        <div class="process-step">
+          <div class="step-num">6</div>
+          <h4>Launch</h4>
+          <p>We go live and submit to Google</p>
+        </div>
+      </div>
+      <div class="col-lg-1 col-md-1 col-auto d-flex align-items-start step-arrow pt-3"><i class="bi bi-chevron-right"></i></div>
+      <div class="col-lg-1 col-md-2 col-4" data-aos="fade-up" data-aos-delay="400">
+        <div class="process-step">
+          <div class="step-num">7</div>
+          <h4>Support</h4>
+          <p>Ongoing WhatsApp support and maintenance</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════
+     PORTFOLIO
+════════════════════════════ -->
+<section class="portfolio-section" id="portfolio">
+  <div class="container">
+    <div class="row mb-5">
+      <div class="col-lg-7" data-aos="fade-right">
+        <div class="section-eyebrow">Our Work</div>
+        <h2 class="section-heading">Real Websites.<br/><span>Real Businesses.</span></h2>
+        <div class="divider"></div>
+        <p class="section-sub mt-3">Every site is custom designed — no templates, no copy-paste. Real businesses across Zimbabwe getting results online.</p>
+      </div>
+    </div>
+    <div class="row gy-4">
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="port-card">
+          <div class="port-mockup pm-blue">
+            <div class="port-browser-bar"><span class="pb-dot"></span><span class="pb-dot"></span><span class="pb-dot"></span><span class="pb-url">rasaprivatecollege.co.zw</span></div>
+            <div class="port-preview">
+              <div class="pp-hero"><div class="pp-line1"></div><div class="pp-line2"></div><div class="pp-btn"></div></div>
+              <div class="pp-grid"><div class="pp-block"></div><div class="pp-block"></div><div class="pp-block"></div></div>
+            </div>
+            <div class="port-overlay"><span class="port-visit-btn">Coming Soon <i class="bi bi-hourglass-split"></i></span></div>
+          </div>
+          <div class="port-info">
+            <div class="port-industry">Education</div>
+            <h4>Rasa Private College</h4>
+            <p>Multi-page school site with student portal, fee payment info, programmes, gallery and admissions system.</p>
+            <div class="port-tags">
+              <span class="port-tag">Web Design</span>
+              <span class="port-tag">Student Portal</span>
+              <span class="port-tag">EcoCash</span>
+            </div>
+            <span class="port-badge-soon">⏳ Coming Soon</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="port-card">
+          <div class="port-mockup pm-purple">
+            <div class="port-browser-bar"><span class="pb-dot"></span><span class="pb-dot"></span><span class="pb-dot"></span><span class="pb-url">sitezim.co.zw</span></div>
+            <div class="port-preview">
+              <div class="pp-hero"><div class="pp-line1"></div><div class="pp-line2"></div><div class="pp-btn"></div></div>
+              <div class="pp-grid"><div class="pp-block"></div><div class="pp-block"></div><div class="pp-block"></div></div>
+            </div>
+            <div class="port-overlay"><a href="#hero" class="port-visit-btn">Visit Website <i class="bi bi-arrow-up-right"></i></a></div>
+          </div>
+          <div class="port-info">
+            <div class="port-industry">Agency</div>
+            <h4>SiteZim Agency</h4>
+            <p>Our own professional agency website — full multi-page with services, portfolio, pricing, testimonials and contact.</p>
+            <div class="port-tags">
+              <span class="port-tag">Web Design</span>
+              <span class="port-tag">SEO</span>
+              <span class="port-tag">Email Setup</span>
+            </div>
+            <div class="port-badge-live">Live Website</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+        <div class="port-card">
+          <div class="port-mockup pm-red">
+            <div class="port-browser-bar"><span class="pb-dot"></span><span class="pb-dot"></span><span class="pb-dot"></span><span class="pb-url">pivotgroceries.co.zw</span></div>
+            <div class="port-preview">
+              <div class="pp-hero"><div class="pp-line1"></div><div class="pp-line2"></div><div class="pp-btn"></div></div>
+              <div class="pp-grid"><div class="pp-block"></div><div class="pp-block"></div><div class="pp-block"></div></div>
+            </div>
+            <div class="port-overlay"><span class="port-visit-btn">Coming Soon <i class="bi bi-hourglass-split"></i></span></div>
+          </div>
+          <div class="port-info">
+            <div class="port-industry">Retail · Masvingo</div>
+            <h4>Pivot Groceries</h4>
+            <p>Grocery store website for a Masvingo retailer — products, trading hours, location and WhatsApp ordering.</p>
+            <div class="port-tags">
+              <span class="port-tag">Web Design</span>
+              <span class="port-tag">Google Maps</span>
+              <span class="port-tag">WhatsApp</span>
+            </div>
+            <span class="port-badge-soon">⏳ In Progress</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+        <div class="port-card">
+          <div class="port-mockup pm-teal">
+            <div class="mini-laptop">
+              <div class="ml-screen"><div class="ml-inner"><div class="ml-line"></div><div class="ml-line short"></div><div class="ml-btn"></div></div></div>
+              <div class="ml-base"></div><div class="ml-stand"></div>
+            </div>
+          </div>
+          <div class="port-info">
+            <div class="port-industry">Restaurant / Hotel</div>
+            <h4>Your Restaurant Here</h4>
+            <p>We're actively taking on restaurant and hotel clients. Get a beautiful site with menu, gallery and booking info.</p>
+            <div class="port-tags">
+              <span class="port-tag">Menu</span>
+              <span class="port-tag">Gallery</span>
+              <span class="port-tag">Booking</span>
+            </div>
+            <span class="port-badge-soon">Available — Contact Us</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
+        <div class="port-card">
+          <div class="port-mockup pm-green">
+            <div class="mini-laptop">
+              <div class="ml-screen"><div class="ml-inner"><div class="ml-line"></div><div class="ml-line short"></div><div class="ml-btn"></div></div></div>
+              <div class="ml-base"></div><div class="ml-stand"></div>
+            </div>
+          </div>
+          <div class="port-info">
+            <div class="port-industry">Company / Corporate</div>
+            <h4>Your Company Here</h4>
+            <p>Is your business next? We build clean, professional corporate websites with services, team and contact forms.</p>
+            <div class="port-tags">
+              <span class="port-tag">Corporate</span>
+              <span class="port-tag">SEO</span>
+              <span class="port-tag">Google Maps</span>
+            </div>
+            <span class="port-badge-soon">Available — Contact Us</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
+        <div class="port-card" style="background:linear-gradient(135deg,var(--primary),var(--primary-dark));border-color:var(--primary);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:40px;">
+          <div style="font-size:3rem;margin-bottom:16px;">✨</div>
+          <h4 style="color:#fff;font-size:1.1rem;">Your Business Could Be Next</h4>
+          <p style="color:rgba(255,255,255,.7);font-size:.85rem;margin-top:8px;line-height:1.7;">Join the growing list of Zimbabwean businesses building their digital future with SiteZim.</p>
+          <a href="#contact" style="margin-top:20px;background:var(--gold);color:var(--dark);padding:10px 24px;border-radius:50px;font-size:.82rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;">Start Today →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════
+     PRICING
+════════════════════════════ -->
+<section class="pricing-section" id="pricing">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <div class="section-eyebrow" style="color:var(--gold);">Transparent Pricing</div>
+      <h2 class="section-heading">Simple Plans for<br/><span style="color:var(--gold);">Every Business</span></h2>
+      <div class="divider mx-auto mt-3"></div>
+      <p class="section-sub mx-auto mt-3" style="color:rgba(255,255,255,.6);">No hidden fees. Pay 50% deposit to start — 50% on delivery. Accept Cash, EcoCash & Bank Transfer.</p>
+    </div>
+    <div class="row gy-4 justify-content-center">
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="price-card">
+          <div class="price-tier">Starter</div>
+          <div class="price-amount"><sup>$</sup>150</div>
+          <p class="price-desc">Perfect for small businesses wanting a fast, simple professional online presence.</p>
+          <a href="https://wa.me/263788331451?text=Hi SiteZim! I want the Starter package ($150)." target="_blank" class="price-cta">Get Started</a>
+          <div class="price-divider"></div>
+          <div class="price-feat"><i class="bi bi-check-circle-fill check"></i> 1-page professional website</div>
+          <div class="price-feat"><i class="bi bi-check-circle-fill check"></i> Mobile-friendly design</div>
+          <div class="price-feat"><i class="bi bi-check-circle-fill check"></i> WhatsApp contact button</div>
+          <div class="price-feat"><i class="bi bi-check-circle-fill check"></i> Free hosting (Netlify)</div>
+          <div class="price-feat"><i class="bi bi-check-circle-fill check"></i> 1 round of revisions</div>
+          <div class="price-feat"><i class="bi bi-check-circle-fill check"></i> Delivered in 2 days</div>
+          <div class="price-feat na"><i class="bi bi-x-circle cross"></i> Domain registration</div>
+          <div class="price-feat na"><i class="bi bi-x-circle cross"></i> Google Business Profile</div>
+          <div class="price-feat na"><i class="bi bi-x-circle cross"></i> SEO</div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="price-card featured">
+          <div class="price-badge">⭐ Most Popular</div>
+          <div class="price-tier" style="color:var(--gold);">Business</div>
+          <div class="price-amount"><sup>$</sup>350</div>
+          <p class="price-desc" style="color:rgba(255,255,255,.65);">The most popular package — full luxury site with domain, SEO and Google presence.</p>
+          <a href="https://wa.me/263788331451?text=Hi SiteZim! I want the Business package ($350)." target="_blank" class="price-cta">Get Started</a>
+          <div class="price-divider"></div>
+          <div class="price-feat"><i class="bi bi-check-circle-fill check"></i> Multi-page website (4–6 pages)</div>
+          <div class="price-feat"><i class="bi bi-check-circle-fill check"></i> Mobile-friendly luxury design</div>
+          <div class="price-feat"><i class="bi bi-check-circle-fill check"></i> WhatsApp contact button</div>
+          <div class="price-feat"><i class="bi bi-check-circle-fill check"></i> Domain registration (.co.zw)</div>
+          <div class="price-feat"><i class="bi bi-check-circle-fill check"></i> Google Business Profile setup</div>
+          <div class="price-feat"><i class="bi bi-check-circle-fill check"></i> Basic SEO included</div>
+          <div class="price-feat"><i class="bi bi-check-circle-fill check"></i> Social media links</div>
+          <div class="price-feat"><i class="bi bi-check-circle-fill check"></i> 3 rounds of revisions</div>
+          <div class="price-feat"><i class="bi bi-check-circle-fill check"></i> Training session</div>
+          <div class="price-feat"><i class="bi bi-check-circle-fill check"></i> Delivered in 5–7 days</div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+        <div class="price-card">
+          <div class="price-tier">Enterprise</div>
+          <div class="price-amount"><sup>$</sup>650</div>
+          <p class="price-desc">For schools, colleges and companies needing a full-featured site with portals and advanced features.</p>
+          <a href="https://wa.me/263788331451?text=Hi SiteZim! I want the Enterprise package ($650)." target="_blank" class="price-cta">Get Started</a>
+          <div class="price-divider"></div>
+          <div class="price-feat"><i class="bi bi-check-circle-fill check"></i> Full multi-page website</div>
+          <div class="price-feat"><i class="bi bi-check-circle-fill check"></i> Mobile-friendly luxury design</div>
+          <div class="price-feat"><i class="bi bi-check-circle-fill check"></i> Domain registration (.co.zw)</div>
+          <div class="price-feat"><i class="bi bi-check-circle-fill check"></i> Google Business Profile</div>
+          <div class="price-feat"><i class="bi bi-check-circle-fill check"></i> Advanced SEO</div>
+          <div class="price-feat"><i class="bi bi-check-circle-fill check"></i> Social media page setup</div>
+          <div class="price-feat"><i class="bi bi-check-circle-fill check"></i> Customer / Student Portal</div>
+          <div class="price-feat"><i class="bi bi-check-circle-fill check"></i> Animations & premium effects</div>
+          <div class="price-feat"><i class="bi bi-check-circle-fill check"></i> Unlimited revisions</div>
+          <div class="price-feat"><i class="bi bi-check-circle-fill check"></i> Delivered in 10–14 days</div>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:rgba(255,255,255,.3);text-align:center;margin-top:20px;">All prices in USD · 50% deposit to start · Balance on delivery · EcoCash & bank transfer accepted</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════
+     TESTIMONIALS
+════════════════════════════ -->
+<section class="testi-section" id="testimonials">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <div class="section-eyebrow">Client Reviews</div>
+      <h2 class="section-heading">What Our Clients<br/><span>Are Saying</span></h2>
+      <div class="divider mx-auto mt-3"></div>
+    </div>
+    <div class="row gy-4">
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"SiteZim built us a beautiful website for our college. It looks very professional and our students and parents are impressed. Fast delivery and great service from a team that truly cares."</p>
+          <div class="testi-author">
+            <div class="testi-avatar av-blue">R</div>
+            <div>
+              <div class="testi-name">Rasa Private College</div>
+              <div class="testi-role">Education · Masvingo, Zimbabwe</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Our website looks amazing. Customers are now finding us on Google Maps and calling us directly. The design is exactly what we wanted — very affordable and worth every cent."</p>
+          <div class="testi-author">
+            <div class="testi-avatar av-green">N</div>
+            <div>
+              <div class="testi-name">Nyaningwe Supermarket</div>
+              <div class="testi-role">Retail · Hughes Street, Masvingo</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Very professional team. They listened, delivered exactly what we needed and supported us after launch. Our business is now easy to find online. I highly recommend SiteZim."</p>
+          <div class="testi-author">
+            <div class="testi-avatar av-purple">M</div>
+            <div>
+              <div class="testi-name">Masvingo Business Owner</div>
+              <div class="testi-role">Company · Masvingo, Zimbabwe</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════
+     CONTACT
+════════════════════════════ -->
+<section class="contact-section" id="contact">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <div class="section-eyebrow">Get In Touch</div>
+      <h2 class="section-heading">Let's Build Something<br/><span>Amazing Together</span></h2>
+      <div class="divider mx-auto mt-3"></div>
+    </div>
+    <div class="row gy-4">
+      <div class="col-lg-5" data-aos="fade-right" data-aos-delay="100">
+        <div class="contact-info-card">
+          <h3 class="cic-title">Contact SiteZim</h3>
+          <p class="cic-sub">We reply within a few hours on WhatsApp. Fill in the form or reach us directly through any of the channels below.</p>
+          <div class="ci-item">
+            <div class="ci-icon"><i class="bi bi-envelope-fill"></i></div>
+            <div>
+              <div class="ci-label">Email</div>
+              <div class="ci-value"><a href="mailto:info@sitezim.co.zw">info@sitezim.co.zw</a></div>
+            </div>
+          </div>
+          <div class="ci-item">
+            <div class="ci-icon"><i class="bi bi-whatsapp"></i></div>
+            <div>
+              <div class="ci-label">Phone / WhatsApp</div>
+              <div class="ci-value"><a href="https://wa.me/263788331451">+263 788 331 451</a></div>
+            </div>
+          </div>
+          <div class="ci-item">
+            <div class="ci-icon"><i class="bi bi-geo-alt-fill"></i></div>
+            <div>
+              <div class="ci-label">Location</div>
+              <div class="ci-value">Masvingo, Zimbabwe</div>
+            </div>
+          </div>
+          <div class="ci-item">
+            <div class="ci-icon"><i class="bi bi-clock-fill"></i></div>
+            <div>
+              <div class="ci-label">Office Hours</div>
+              <div class="ci-value">Mon–Sat: 8AM – 6PM<br/>WhatsApp: 24/7</div>
+            </div>
+          </div>
+          <div class="cic-social">
+            <a href="https://facebook.com/Knowledge.Mabwe" target="_blank"><i class="bi bi-facebook"></i></a>
+            <a href="https://instagram.com/Coltrane.com" target="_blank"><i class="bi bi-instagram"></i></a>
+            <a href="https://wa.me/263788331451" target="_blank"><i class="bi bi-whatsapp"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-7" data-aos="fade-left" data-aos-delay="200">
+        <div class="contact-form-card">
+          <h4 style="font-size:1.3rem;font-weight:800;color:var(--dark);margin-bottom:6px;">Send Us A Message</h4>
+          <p style="font-size:.85rem;color:var(--text);margin-bottom:24px;">Your message goes straight to our WhatsApp — we'll reply within a few hours.</p>
+          <div class="row gy-3">
+            <div class="col-md-6">
+              <label class="form-label-custom">Your Name</label>
+              <input type="text" id="cName" class="form-control-custom" placeholder="e.g. Tendai Moyo">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label-custom">Phone / WhatsApp</label>
+              <input type="text" id="cPhone" class="form-control-custom" placeholder="+263 7XX XXX XXX">
+            </div>
+            <div class="col-12">
+              <label class="form-label-custom">Business Name</label>
+              <input type="text" id="cBusiness" class="form-control-custom" placeholder="e.g. Pivot Groceries">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label-custom">Type of Business</label>
+              <select id="cType" class="form-control-custom">
+                <option value="">Select type...</option>
+                <option>Supermarket / Grocery Store</option>
+                <option>School / College</option>
+                <option>Restaurant / Hotel</option>
+                <option>Company / Office</option>
+                <option>Salon / Barbershop</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label-custom">Package Interested In</label>
+              <select id="cPackage" class="form-control-custom">
+                <option value="">Select package...</option>
+                <option>Starter — $150</option>
+                <option>Business — $350</option>
+                <option>Enterprise — $650</option>
+                <option>Google Business Setup — $30</option>
+                <option>Not sure yet</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <label class="form-label-custom">Tell Us More</label>
+              <textarea id="cMessage" class="form-control-custom" placeholder="Describe your business and what kind of website you want..."></textarea>
+            </div>
+            <div class="col-12">
+              <button onclick="sendWhatsApp()" class="btn-submit">📱 Send Message via WhatsApp</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ════════════════════════════
+     FOOTER
+════════════════════════════ -->
+<!-- ════════════════════════════
+     FOOTER CTA
+════════════════════════════ -->
+<section class="footer-cta">
+  <div class="footer-cta-blob"></div>
+  <div class="container position-relative" style="z-index:2;">
+    <div class="row align-items-center">
+      <div class="col-lg-8" data-aos="fade-right">
+        <div class="fc-eyebrow">Ready When You Are</div>
+        <h2 class="fc-heading">Let's Build Something<br/><span>Impossible to Ignore.</span></h2>
+      </div>
+      <div class="col-lg-4 text-lg-end mt-4 mt-lg-0" data-aos="fade-left">
+        <a href="https://wa.me/263788331451?text=Hello SiteZim! I want to get my business online." target="_blank" class="fc-btn">📱 Start on WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="row gy-5">
+      <div class="col-lg-4">
+        <div class="footer-logo">Site<span>Zim</span><small>sitezim.co.zw</small></div>
+        <p class="footer-desc">Professional web design for Zimbabwean businesses. We help companies get online with beautiful, fast, and affordable websites. Proudly built by Mabwetech, Masvingo.</p>
+        <div class="footer-social">
+          <a href="https://facebook.com/Knowledge.Mabwe" target="_blank"><i class="bi bi-facebook"></i></a>
+          <a href="https://instagram.com/Coltrane.com" target="_blank"><i class="bi bi-instagram"></i></a>
+          <a href="https://wa.me/263788331451" target="_blank"><i class="bi bi-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-4">
+        <div class="footer-heading">Company</div>
+        <ul class="footer-links">
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#portfolio">Portfolio</a></li>
+          <li><a href="#testimonials">Reviews</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-md-4">
+        <div class="footer-heading">Services</div>
+        <ul class="footer-links">
+          <li><a href="#services">Business Websites</a></li>
+          <li><a href="#services">E-commerce Stores</a></li>
+          <li><a href="#services">School Websites</a></li>
+          <li><a href="#services">Domain Registration</a></li>
+          <li><a href="#services">Web Hosting</a></li>
+          <li><a href="#services">Professional Email</a></li>
+          <li><a href="#services">SEO</a></li>
+          <li><a href="#services">Maintenance</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-md-4">
+        <div class="footer-heading">Contact</div>
+        <div class="footer-contact-card">
+          <div class="footer-contact-item"><i class="bi bi-envelope-fill"></i><span><a href="mailto:info@sitezim.co.zw">info@sitezim.co.zw</a></span></div>
+          <div class="footer-contact-item"><i class="bi bi-whatsapp"></i><span><a href="https://wa.me/263788331451">+263 788 331 451</a></span></div>
+          <div class="footer-contact-item"><i class="bi bi-geo-alt-fill"></i><span>Masvingo, Zimbabwe</span></div>
+          <div class="footer-contact-item"><i class="bi bi-clock-fill"></i><span>Mon–Sat 8AM–6PM<br/>WhatsApp: 24/7</span></div>
+        </div>
+        <div class="footer-social" style="margin-top:18px;">
+          <a href="https://facebook.com/Knowledge.Mabwe" target="_blank"><i class="bi bi-facebook"></i></a>
+          <a href="https://instagram.com/Coltrane.com" target="_blank"><i class="bi bi-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-divider">
+      <p class="footer-copy">© 2026 <span>SiteZim</span> · Built by <span>Mabwetech</span> · Masvingo, Zimbabwe · All rights reserved.</p>
+      <p class="footer-copy">Designed by <span>SiteZim</span> · sitezim.co.zw · +263 788 331 451</p>
+    </div>
+  </div>
+</footer>
+
+<!-- JS VENDORS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+(function(){
+  // Preloader
+  window.addEventListener('load', () => {
+    const pl = document.getElementById('preloader');
+    setTimeout(() => { pl.style.opacity = '0'; setTimeout(() => pl.remove(), 500); }, 800);
+  });
+
+  // AOS
+  AOS.init({ duration: 700, easing: 'ease-out-cubic', once: true, offset: 60 });
+
+  // Navbar scroll
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+    const st = document.getElementById('scroll-top');
+    st.classList.toggle('show', window.scrollY > 300);
+  });
+
+  // Scroll top
+  document.getElementById('scroll-top').addEventListener('click', e => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // Smooth scroll nav links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); window.scrollTo({ top: t.offsetTop - 72, behavior: 'smooth' }); }
+    });
+  });
+
+  // Active nav highlight
+  const sections = document.querySelectorAll('section[id], div[id]');
+  window.addEventListener('scroll', () => {
+    let cur = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) cur = s.id; });
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + cur ? 'var(--gold)' : '';
+    });
+  });
+
+  // Subtle image parallax
+  const parallaxImg = document.querySelector('.about-img-wrap img');
+  if (parallaxImg) {
+    window.addEventListener('scroll', () => {
+      const rect = parallaxImg.getBoundingClientRect();
+      const offset = (rect.top - window.innerHeight / 2) * 0.06;
+      parallaxImg.style.transform = `translateY(${offset}px)`;
+    });
+  }
+
+  // Premium cursor glow
+  const glow = document.getElementById('cursorGlow');
+  if (glow) {
+    let gx = 0, gy = 0, cx = 0, cy = 0;
+    window.addEventListener('mousemove', e => {
+      gx = e.clientX; gy = e.clientY;
+      glow.classList.add('active');
+    });
+    (function loop(){
+      cx += (gx - cx) * 0.18; cy += (gy - cy) * 0.18;
+      glow.style.left = cx + 'px'; glow.style.top = cy + 'px';
+      requestAnimationFrame(loop);
+    })();
+    document.addEventListener('mouseover', e => {
+      if (e.target.closest('a, button, .price-card, .port-card, .stat-card, .svc-card')) glow.classList.add('hovering');
+    });
+    document.addEventListener('mouseout', e => {
+      if (e.target.closest('a, button, .price-card, .port-card, .stat-card, .svc-card')) glow.classList.remove('hovering');
+    });
+    document.addEventListener('mouseleave', () => glow.classList.remove('active'));
+  }
+
+  // Counter animation
+  const counters = document.querySelectorAll('.stat-num[data-count]');
+  const countObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target, target = +el.dataset.count;
+      let count = 0;
+      const step = target / 60;
+      const timer = setInterval(() => {
+        count = Math.min(count + step, target);
+        el.textContent = Math.ceil(count) + '+';
+        if (count >= target) clearInterval(timer);
+      }, 25);
+      countObs.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(c => countObs.observe(c));
+})();
+
+// Mobile nav toggle
+function toggleMobileNav() {
+  document.getElementById('mobileNav').classList.toggle('open');
+}
+
+// WhatsApp form
+function sendWhatsApp() {
+  const n = document.getElementById('cName').value || 'Not provided';
+  const p = document.getElementById('cPhone').value || 'Not provided';
+  const b = document.getElementById('cBusiness').value || 'Not provided';
+  const t = document.getElementById('cType').value || 'Not specified';
+  const k = document.getElementById('cPackage').value || 'Not specified';
+  const m = document.getElementById('cMessage').value || 'No details';
+  const msg =
+    `Hello SiteZim! I'd like a website.%0A%0A` +
+    `*Name:* ${encodeURIComponent(n)}%0A` +
+    `*Phone:* ${encodeURIComponent(p)}%0A` +
+    `*Business:* ${encodeURIComponent(b)}%0A` +
+    `*Type:* ${encodeURIComponent(t)}%0A` +
+    `*Package:* ${encodeURIComponent(k)}%0A` +
+    `*Details:* ${encodeURIComponent(m)}`;
+  window.open('https://wa.me/263788331451?text=' + msg, '_blank');
+}
+</script>
+</body>
+</html>
