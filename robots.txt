@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sitezim.co.zw/sitemap.xml
